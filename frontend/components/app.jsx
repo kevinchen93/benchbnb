@@ -8,8 +8,8 @@ const App = (props) => {
     <div>
       <h1>benchBnB</h1>
 
-      <Route path="/signup" component={SignupForm} />
-      <Route path="/login" component={LoginForm} />
+      <AuthRoute path="/signup" component={SignupForm} />
+      <AuthRoute path="/login" component={LoginForm} />
     </div>
   )
 }
