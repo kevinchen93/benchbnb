@@ -4,7 +4,7 @@ import {
 } from '../actions/session_actions';
 
 const defaultState = {
-  currentUserId: null
+  id: null
 };
 
 const sessionReducer = ( state = defaultState, action ) => {
@@ -12,7 +12,7 @@ const sessionReducer = ( state = defaultState, action ) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
       return {
-        currentUserId: action.user.id
+        id: action.user.id
       };
     case LOGOUT_CURRENT_USER:
       return defaultState;
