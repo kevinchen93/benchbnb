@@ -1,10 +1,12 @@
 class Api::BenchesController < ApplicationController
   def index
-    if bounds
-      @benches = Bench.in_bounds(bounds)
-    else
-      @benches = Bench.all
+    @benches = bounds ? Bench.in_bounds(bounds) : Bench.all
+
+    if params[:minSeating] && params[:maxSeating]
+      @benches = @benches.where(seating: seating_range)
     end
+
+    render :index
   end
 
   def create
@@ -20,6 +22,10 @@ class Api::BenchesController < ApplicationController
 
   def bench_params
     params.require(:bench).permit(:description, :lat, :lng)
+  end
+
+  def seating_range
+    (params[:minSeating]..params[:maxSeating])
   end
 
   def bounds
