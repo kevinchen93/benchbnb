@@ -11,10 +11,12 @@ const receiveBenches = (benches) => {
   };
 };
 
-const receiveBench = (bench) => {
+const receiveBench = ({ bench, reviews, authors }) => {
   return {
     type: RECEIVE_BENCH,
-    bench
+    bench,
+    reviews,
+    authors
   };
 };
 

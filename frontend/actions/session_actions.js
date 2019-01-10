@@ -34,22 +34,22 @@ export const clearSessionErrors = () => {
 
 // Thunk actions
 export const login = (user) => {
-  return dispatch => SessionAPIUtil.signup(user).then(
+  return dispatch => SessionAPIUtil.login(user).then(
     response => dispatch(receiveCurrentUser(response)),
-    errors => dispatch(receiveSessionErrors(error.responseJSON))
+    errors => dispatch(receiveSessionErrors(errors.responseJSON))
   );
 };
 
 export const logout = () => {
-  return dispatch => SessionAPIUtil.signup(user).then(
+  return dispatch => SessionAPIUtil.logout().then(
     response => dispatch(logoutCurrentUser()),
-    errors => dispatch(receiveSessionErrors(error.responseJSON))
+    errors => dispatch(receiveSessionErrors(errors.responseJSON))
   );
 };
 
 export const signup = (user) => {
   return dispatch => SessionAPIUtil.signup(user).then(
     response => dispatch(receiveCurrentUser(response)),
-    errors => dispatch(receiveSessionErrors(error.responseJSON))
+    errors => dispatch(receiveSessionErrors(errors.responseJSON))
   );
 };

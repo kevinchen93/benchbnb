@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import BenchMap from '../benches/bench_map';
 import BenchDetail from './bench_detail';
 
-const BenchShow = ({ bench, benchId, fetchBench }) => {
+import { ProtectedRoute } from '../../util/route_util';
+import ReviewFormContainer from './review_form_container';
+import { ReviewLink } from '../../util/link_util';
+
+const BenchShow = ({ bench, benchId, fetchBench, reviews }) => {
   const benches = {
     [benchId]: bench
   };
@@ -18,7 +22,19 @@ const BenchShow = ({ bench, benchId, fetchBench }) => {
         benchId={benchId}
         fetchBench={fetchBench}
       />
-      <BenchDetail bench={bench} />
+      <BenchDetail
+        bench={bench}
+        reviews={reviews}
+      />
+      <ReviewLink
+        component={ReviewFormContainer}
+        to={`/benches/${benchId}/review`}
+        label="Leave a Review"
+      />
+      <ProtectedRoute
+        path="/benches/:benchId/review"
+        component={ReviewFormContainer}
+      />
     </div>
   );
 };
