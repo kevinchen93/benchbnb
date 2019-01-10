@@ -1,5 +1,5 @@
 json.bench do
-  json.partial! 'api/benches/bench', bench: @bench
+  json.partial! '/api/benches/bench', bench: @bench
   json.reviewIds @bench.reviews.pluck(:id)
 end
 
@@ -15,4 +15,4 @@ end
       json.extract! review.author, :id, :username
     end
   end
-end 
+end
