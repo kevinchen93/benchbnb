@@ -12,12 +12,11 @@ export default class MarkerManager {
 
     benches.filter(bench => !this.markers[bench.id])
            .forEach(newBench => this.createMarkerFromBench(newBench, this.handleClick))
-
+           
     Object.keys(this.markers)
            .filter(benchId => !benchesObj[benchId])
            .forEach((benchId) => this.removeMarker(this.markers[benchId]));
 
-    console.log(this.markers);
   }
 
   createMarkerFromBench(bench) {

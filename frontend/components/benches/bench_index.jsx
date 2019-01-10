@@ -6,7 +6,7 @@ const BenchIndex = ({ benches }) => {
     <div>
       <h1>Benches: </h1>
       { benches.map(bench => (
-        <BenchIndexItem key={bench.id} bench={bench} />
+        <BenchIndexItem bench={bench} key={bench.id} />
       ))}
     </div>
   );
