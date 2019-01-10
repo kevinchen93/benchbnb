@@ -1,46 +1,58 @@
 import React from 'react';
-import MarkerManager from '../../util/marker_manager';
+import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
+
+import MarkerManager from '../../util/marker_manager';
 
 const getCoordsObj = latLng => ({
   lat: latLng.lat(),
   lng: latLng.lng()
 });
 
-class BenchMap extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const mapOptions = {
+  center: { lat: 40.751406, lng: -73.983918 },
+  zoom: 13
+};
 
+class BenchMap extends React.Component {
   componentDidMount() {
-    const mapOptions = {
-      center: { lat: 40.751406, lng: -73.983918 },
-      zoom: 13
-    };
     const map = this.refs.map;
-    this.map = new google.maps.Map(this.mapNode, mapOptions);
+    this.map = new google.maps.Map(map, mapOptions);
     this.MarkerManager = new MarkerManager(this.map, this.handleMarkerClick.bind(this));
-    this.MarkerManager.updateMarkers(this.props.benches);
-    this.registerListeners();
+    if (this.props.singleBench) {
+      this.props.fetchBench(this.props.benchId);
+    } else {
+      this.registerListeners();
+      this.MarkerManager.updateMarkers(this.props.benches);
+    }
   }
 
   componentDidUpdate() {
-    this.MarkerManager.updateMarkers(this.props.benches);
+    if (this.props.singleBench) {
+      const targetBenchKey = Object.keys(this.props.benches)[0];
+      const targetBench = this.props.benches[targetBenchKey];
+      this.MarkerManager.updateMarkers([targetBench]); //grabs only that one bench
+    } else {
+      this.MarkerManager.updateMarkers(this.props.benches);
+    }
   }
 
   registerListeners() {
     google.maps.event.addListener(this.map, 'idle', () => {
       const { north, south, east, west } = this.map.getBounds().toJSON();
       const bounds = {
-        northEast: { lat: north, lng: east },
-        southWest: { lat: south, lng: west }
-      };
+        northEast: { lat:north, lng: east },
+        southWest: { lat: south, lng: west } };
       this.props.updateFilter('bounds', bounds);
     });
     google.maps.event.addListener(this.map, 'click', (event) => {
       const coords = getCoordsObj(event.latLng);
       this.handleClick(coords);
     });
+  }
+
+  handleMarkerClick(bench) {
+    this.props.history.push(`benches/${bench.id}`);
   }
 
   handleClick(coords) {
@@ -50,19 +62,11 @@ class BenchMap extends React.Component {
     });
   }
 
-  handleMarkerClick(bench) {
-    this.props.history.push(`benches/${bench.id}`);
-  }
-
-  componentWillReceiveProps() {
-    this.MarkerManager.updateMarkers(this.props.benches);
-  }
-
   render() {
     return (
-      <div id="map-container" ref={ map => this.mapNode = map }></div>
+      <div id="map-container" ref="map"></div>
     );
-  };
+  }
 }
 
 export default withRouter(BenchMap);

@@ -26,6 +26,12 @@ export const fetchBenches = (filters) => {
   );
 };
 
+export const fetchBench = (benchId) => {
+  return dispatch => BenchAPIUtil.fetchBench(benchId).then(
+    response => dispatch(receiveBench(response))
+  );
+};
+
 export const createBench = (bench) => {
   return dispatch => BenchAPIUtil.createBench(bench).then(
     response => dispatch(receiveBench(response))

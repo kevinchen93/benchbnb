@@ -6,6 +6,7 @@ import LoginForm from './session/login_form';
 import BenchIndexContainer from './benches/bench_index_container';
 import SearchContainer from './search/search_container';
 import BenchFormContainer from './bench_form/bench_form_container';
+import BenchShowContainer from './bench_show/bench_show_container';
 
 const App = (props) => {
   return (
@@ -16,6 +17,8 @@ const App = (props) => {
       <AuthRoute path="/login" component={LoginForm} />
       <ProtectedRoute exact path="/benches/new" component={BenchFormContainer} />
       <Route exact path = "/" component={SearchContainer} />
+      <Route exact path = "/benches/:benchId" component={BenchShowContainer} />
+
 
     </div>
   )
