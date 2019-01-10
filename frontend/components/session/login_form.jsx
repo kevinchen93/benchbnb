@@ -55,7 +55,7 @@ class LoginForm extends React.Component {
         <ul>{errors}</ul>
 
         <div>
-          <p>Don't have an account? <Link to="/login">Sign Up</Link></p>
+          <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
         </div>
       </div>
     )
